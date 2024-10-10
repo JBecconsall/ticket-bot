@@ -10,6 +10,7 @@ const {
     ButtonStyle,
 } = require("discord.js");
 const transcripts = require('discord-html-transcripts');
+const config = require('../utils/config.json')
 module.exports = async (interaction) => {
 
     client.on('interactionCreate', async (interaction) => {
@@ -18,7 +19,7 @@ module.exports = async (interaction) => {
 
         if (interaction.customId === 'close') {
 
-            if (!interaction.member.roles.cache.has('1199846888342564974')) { // ! MANAGE TICKETS PERMISSION
+            if (!interaction.member.roles.cache.has(config.STAFF_ID)) { // ! MANAGE TICKETS PERMISSION
 
                 interaction.reply({
                     content: 'You do not have permission to close tickets',
@@ -127,7 +128,7 @@ module.exports = async (interaction) => {
 
         if (interaction.customId === 'claim') {
 
-            if (!interaction.member.roles.cache.has('1199846888342564974')) {
+            if (!interaction.member.roles.cache.has(config.STAFF_ID)) {
                 interaction.reply({
                     content: 'You do not have permission to claim tickets',
                     ephemeral: true
@@ -152,7 +153,7 @@ module.exports = async (interaction) => {
 
         if (interaction.customId === 'delete') {
 
-            if (!interaction.member.roles.cache.has('1199846888342564974')) {
+            if (!interaction.member.roles.cache.has(config.STAFF_ID)) {
 
                 interaction.reply({
                     content: 'You do not have permission to delete tickets',
