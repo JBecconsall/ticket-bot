@@ -9,6 +9,7 @@ const {
 } = require("discord.js");
 const {client} = require("../index");
 const config = require('../utils/config.json');
+const {addTicket} = require('../database/queries/ticketQuery')
 module.exports = async (instance, message) => {
 
     
@@ -72,6 +73,7 @@ module.exports = async (instance, message) => {
                     ephemeral: true
                 })
 
+                await addTicket(interaction.user.id, Date.now().toLocaleString())
                 await channel.send({embeds: [genSupOpened], components: [row1]})
             })
 

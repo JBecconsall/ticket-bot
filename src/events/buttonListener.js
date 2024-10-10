@@ -81,7 +81,6 @@ module.exports = async (interaction) => {
                 interaction.channel.send(closedMsg)
 
 
-
             }
 
         }

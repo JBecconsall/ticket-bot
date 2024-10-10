@@ -12,6 +12,7 @@ const {
     CommandType
 } = require("wokcommands");
 const config = require('../../utils/config.json')
+const {addTicket} = require('../../database/queries/ticketQuery')
 
 module.exports = {
     category: 'Tickets',
@@ -77,7 +78,7 @@ module.exports = {
                     content: `Your ticket has been made at <#${channel.id}>`,
                     ephemeral: true
                 })
-
+                await addTicket(interaction.user.id, Date.now().toLocaleString())
                 await channel.send({embeds: [genSupOpened], components: [row1]})
             })
         
