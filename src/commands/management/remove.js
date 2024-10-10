@@ -1,37 +1,34 @@
-const config = require('../utils/config.json')
 const {
     EmbedBuilder,
     MessagePayload,
     ApplicationCommandOptionType,
     PermissionsBitField
 } = require("discord.js");
-const {
-    CommandType
-} = require("wokcommands");
+const {CommandType} = require("wokcommands");
+const config = require('../../utils/config.json')
 
 module.exports = {
     category: 'Tickets',
-    name: 'removerole',
-    description: 'Removes a role from the ticket',
+    name: 'remove',
+    description: 'Removes a user from the ticket',
     testOnly: true,
     type: CommandType.SLASH,
     options: [{
-        name: 'role',
-        description: 'The role to remove from the ticket',
+        name: 'user',
+        description: 'The user to remove from the ticket',
         required: true,
-        type: ApplicationCommandOptionType.Role
+        type: ApplicationCommandOptionType.User
     }],
     callback: async ({
         interaction,
         client
     }) => {
 
-        const role = interaction.options.getRole('role')
-
+        const auser = interaction.options.getMember('user')
 
         const success = new EmbedBuilder()
             .setColor('Green')
-            .setDescription(`<@&${role.id}> has been removed from the ticket!`)
+            .setDescription(`<@${auser.user.id}> has been removed from the ticket!`)
             .setTimestamp()
 
             const errorEmbed = new EmbedBuilder()
@@ -49,7 +46,7 @@ module.exports = {
 
         } else {
 
-            await interaction.channel.permissionOverwrites.edit(role.id, {
+            await interaction.channel.permissionOverwrites.edit(auser.user.id, {
                 ViewChannel: false,
                 ReadMessageHistory: false,
                 EmbedLinks: false,
@@ -62,6 +59,7 @@ module.exports = {
             })
 
             await interaction.reply(msg)
+
         }
     }
 }

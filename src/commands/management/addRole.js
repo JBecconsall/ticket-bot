@@ -5,29 +5,30 @@ const {
     PermissionsBitField
 } = require("discord.js");
 const {CommandType} = require("wokcommands");
-const config = require('../utils/config.json')
+const config = require('../../utils/config.json')
+
 module.exports = {
     category: 'Tickets',
-    name: 'add',
-    description: 'Adds a user to the ticket',
+    name: 'addrole',
+    description: 'Adds a role to the ticket',
     testOnly: true,
     type: CommandType.SLASH,
     options: [{
-        name: 'user',
-        description: 'The user to add to the ticket',
+        name: 'role',
+        description: 'The role to add to the ticket',
         required: true,
-        type: ApplicationCommandOptionType.User
+        type: ApplicationCommandOptionType.Role
     }],
     callback: async ({
         interaction,
         client
     }) => {
 
-        const auser = interaction.options.getMember('user')
+        const role = interaction.options.getRole('role')
 
         const success = new EmbedBuilder()
             .setColor('Green')
-            .setDescription(`<@${auser.user.id}> has been added to the ticket!`)
+            .setDescription(`<@&${role.id}> has been added to the ticket!`)
             .setTimestamp()
 
             const errorEmbed = new EmbedBuilder()
@@ -45,7 +46,7 @@ module.exports = {
 
         } else {
 
-            await interaction.channel.permissionOverwrites.edit(auser.user.id, {
+            await interaction.channel.permissionOverwrites.edit(role.id, {
                 ViewChannel: true,
                 ReadMessageHistory: true,
                 EmbedLinks: true,
@@ -58,7 +59,7 @@ module.exports = {
             })
 
             await interaction.reply(msg)
-        }
 
+        }
     }
 }
